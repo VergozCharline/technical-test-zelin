@@ -45,6 +45,25 @@ async function getAllBooks(req, res) {
     }
   }
 
+  async function getOneBook(req, res) {
+    try {
+      const collection = await getCollection();
+      const bookID = req.params.bookID;
+      console.log(bookID);
+      const result = await collection.findOne({
+        _id: ObjectId.createFromHexString(bookID),
+      });
+      if (result) {
+        res.json(result);
+      } else {
+        res.status(404).json({ message: "Book not found" });
+      }
+    } catch (error) {
+      console.error("Error retrieving a book", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+
   async function updateBook(req, res) {
     try {
       const collection = await getCollection();
@@ -72,5 +91,5 @@ async function getAllBooks(req, res) {
 
   
 
-  module.exports = { getAllBooks, createBook, updateBook };
+  module.exports = { getAllBooks, createBook, updateBook, getOneBook };
   
