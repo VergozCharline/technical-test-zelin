@@ -89,7 +89,24 @@ async function getAllBooks(req, res) {
     }
   }
 
+  async function deleteBook(req, res) {
+    try {
+      const collection = await getCollection();
+      const bookID = req.params.bookID;
+      result = await collection.deleteOne({
+        _id: ObjectId.createFromHexString(bookID),
+      });
+      if (result.deletedCount === 1) {
+        res.status(200).json({ message: "Book deleted succefullly" });
+      } else {
+        res.status(404).json({ message: "Book not found" });
+      }
+    } catch (error) {
+      console.error("Error deleting book", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
   
 
-  module.exports = { getAllBooks, createBook, updateBook, getOneBook };
+  module.exports = { getAllBooks, createBook, updateBook, getOneBook, deleteBook };
   
