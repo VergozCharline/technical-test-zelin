@@ -45,7 +45,32 @@ async function getAllBooks(req, res) {
     }
   }
 
+  async function updateBook(req, res) {
+    try {
+      const collection = await getCollection();
+      const bookID = req.params.bookID;
+      const updatedData = req.body;
+  
+      delete updatedData._id;
+  
+      const result = await collection.updateOne(
+        { _id: ObjectId.createFromHexString(bookID) },
+        { $set: updatedData }
+      );
+      console.log(result);
+  
+      if (result.matchedCount > 0) {
+        res.status(200).json({ message: "Book updated succesfully" });
+      } else {
+        res.status(404).json({ message: "Book not found" });
+      }
+    } catch (error) {
+      console.error("Error updating a book", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+
   
 
-  module.exports = { getAllBooks, createBook };
+  module.exports = { getAllBooks, createBook, updateBook };
   
