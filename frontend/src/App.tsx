@@ -10,12 +10,12 @@ import BooksHome from './components/BooksHome.component';
 
 function App() {
   const [openSearch, setOpenSearch] = useState(false);
-  const [openNewBook, setOpenNewBook] = useState(false)
+  const [openNewBook, setOpenNewBook] = useState(false);
   return (
     <Router>
       <div>
         <Header setOpenSearch={setOpenSearch} setOpenNewBook={setOpenNewBook} />
-        <MyBooks />
+        {/* <MyBooks /> */}
         <BooksHome />
         {openSearch && <Search />}
         {openNewBook && <NewBook setOpenNewBook={setOpenNewBook} />}
