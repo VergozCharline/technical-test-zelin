@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss'
+
 type Props = {
   setOpenNewBook: (value: boolean) => void;
 };
@@ -31,8 +34,16 @@ export default function NewBook({ setOpenNewBook }: Props) {
       .then((response:any) => {
         console.log(response);
         if(response.status === 201){
-          alert("ok")
+          Swal.fire({
+            title: "Livre crée avec succès",
+            icon: "success"
+          });
           setOpenNewBook(false)
+        } else {
+          Swal.fire({
+            title: "Une erreur s'est produite",
+            icon: "error"
+          });
         }
       })
       .catch((error) => {
