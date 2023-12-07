@@ -6,6 +6,7 @@ import Footer from './components/Footer.component';
 import Search from './components/Search.component';
 import NewBook from './components/NewBook.component';
 import MyBooks from './components/MyBooks.component';
+import BooksHome from './components/BooksHome.component';
 
 function App() {
   const [openSearch, setOpenSearch] = useState(false);
@@ -15,6 +16,7 @@ function App() {
       <div>
         <Header setOpenSearch={setOpenSearch} setOpenNewBook={setOpenNewBook} />
         <MyBooks />
+        <BooksHome />
         {openSearch && <Search />}
         {openNewBook && <NewBook setOpenNewBook={setOpenNewBook} />}
         <Footer />

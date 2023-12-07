@@ -9,7 +9,7 @@ type Props = {
 export default function Header({ setOpenSearch, setOpenNewBook }:Props) {
 
   return (
-    <header className="fixed top-0 w-full shadow-md">
+    <header className="fixed top-0 w-full shadow-md z-50 bg-white">
       <nav className="flex flex-row justify-around items-center">
         <Link to="/" aria-label="retour à la page d'accueil">
           <img className="scale-150" src="/logo.webp" alt="Logo" width={100} height={100} />
