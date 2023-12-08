@@ -8,9 +8,9 @@ async function getCollection() {
   
   async function createBook(req, res) {
     try {
-      const { title, author, date, note, rate, last_modification } = req.body;
+      const { title, author, date, note, rate, lastModification } = req.body;
 
-      if (!title || !author || !date || !note || !last_modification) {
+      if (!title || !author || !date || !note) {
         return res.status(400).json({ message: "Please complete all fields" });
       }
   
@@ -19,13 +19,14 @@ async function getCollection() {
         title,
         author,
         date,
-        publication_date: new Date(),
+        publicationDate: new Date(),
         note,
         rate: Number(rate),
-        last_modification: new Date(),
+        lastModification: lastModification ? new Date() : null,
       });
   
       res.status(201).json({ message: 'Book create successfully' });
+      console.log(result);
     } catch (error) {
       console.error("Error ", error);
       res.status(500).json({ message: "Error when creating the book" });
