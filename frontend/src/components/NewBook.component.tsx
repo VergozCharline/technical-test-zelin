@@ -60,6 +60,7 @@ export default function NewBook({ setOpenNewBook }: Props) {
           Ajouter un livre
         </h2>
         <button
+        type="button"
           className="absolute right-7 lg:right-[20%] top-12 lg:top-[23%] border rounded-full px-3 py-1 hover:text-white hover:bg-hoverPurple"
           onClick={() => setOpenNewBook(false)}
         >

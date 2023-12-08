@@ -35,7 +35,7 @@ export const BookContextProvider: React.FC<BookContextProviderProps> = ({
         setBooks(response.data); 
       })
       .catch((error) => {
-        console.error("Erreur lors de la récupération des livres : ", error);
+        console.error("Erreur get books : ", error);
       });
   }, []);
 

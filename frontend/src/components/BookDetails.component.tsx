@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
 type Props = {
@@ -8,23 +8,70 @@ type Props = {
     bookId: any;
   };
 
+  interface Book {
+    id: number;
+    title: string;
+    author: string;
+    date: string;
+    rate: number;
+    note: string;
+    last_modification: string;
+    modification_date: string;
+  }
+
 export default function BookDetails({ setOpenBookDetails, bookId, books }:Props) {
+
+  const [deleteOneBook, setDeleteOneBook] = useState<Book[]>([]);
+  
+  const { id } = useParams();
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<Book[]>('http://localhost:8001/api/books');
+        setDeleteOneBook(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const deleteBook = async (bookId: number) => {
+    try {
+      await axios.delete(`http://localhost:8001/api/books/${bookId}`);
+      const updatedBooksResponse = await axios.get<Book[]>('http://localhost:8001/api/books');
+      setDeleteOneBook(updatedBooksResponse.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <section className="mt-36 lg:mx-20">
     <div className="fixed top-0 right-0 left-0 h-screen flex justify-center items-center backdrop-blur-md z-50">
         <button
+        type="button"
           className="absolute right-7 lg:right-[20%] top-12 lg:top-[18%] border rounded-full px-3 py-1 hover:text-white hover:bg-hoverPurple z-50"
           onClick={() => setOpenBookDetails(false)}
         >
           X
         </button>
+       
         <div className="flex flex-wrap gap-5 w-full h-[70vh]">
         {books.filter((myBooks: any) => myBooks._id === bookId).map((myBooks: any) => (
             <div
               key={myBooks._id}
               className="bg-white border rounded-md px-5 py-5 w-full mx-2 md:mx-auto lg:w-[70%] overflow-y-scroll lg:overflow-y-auto z-10"
             >
+               <button
+               type="button"
+          className="absolute right-7 lg:right-[20%] top-12 lg:top-[28%] border rounded-full px-3 py-1 hover:text-white hover:bg-hoverPurple z-50"
+          onClick={() => deleteBook(myBooks._id)}
+        >
+          Supprimer
+        </button>
             <img
               className="absolute opacity-30 -z-10 scale-110 mx-auto"
               src="/decoration.webp"

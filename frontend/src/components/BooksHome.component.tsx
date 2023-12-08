@@ -15,31 +15,28 @@ export default function BooksHome() {
   const { books }: any = useContext(BookContext);
   const [bookId, setBookId] = useState<any | null>(null);
   const [openBookDetails, setOpenBookDetails] = useState<boolean>(false);
+  const [getBookDetails, setBookDetails] = useState({})
+  const [refetchDelete, setRefetchDelete] = useState(false)
+
+  const { id } = useParams();
 
   const getBookId = (id:any) =>{
       setBookId(id);
       setOpenBookDetails(true)
   }
 
-  const [bla, setBla] = useState({})
-  const { id } = useParams();
-
-
 useEffect(() => {
   axios.get(`http://localhost:8001/api/books/${id}`)
   .then(response => {
       console.log(response);
-      setBla(response.data)
+      setBookDetails(response.data)
+      setRefetchDelete(!refetchDelete)
   })
   .catch((error) => {
       console.error(error);
       
   })
-}, [])
-
-
-  console.log(openBookDetails);
-  
+}, [setRefetchDelete])
   
   return (
     <div className="mt-40">
