@@ -5,14 +5,44 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import { Pagination } from "swiper/modules";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BookContext } from "../context/BookContext";
+import BookDetails from "./BookDetails.component";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function BooksHome() {
   const { books }: any = useContext(BookContext);
+  const [bookId, setBookId] = useState<any | null>(null);
+  const [openBookDetails, setOpenBookDetails] = useState<boolean>(false);
+
+  const getBookId = (id:any) =>{
+      setBookId(id);
+      setOpenBookDetails(true)
+  }
+
+  const [bla, setBla] = useState({})
+  const { id } = useParams();
+
+
+useEffect(() => {
+  axios.get(`http://localhost:8001/api/books/${id}`)
+  .then(response => {
+      console.log(response);
+      setBla(response.data)
+  })
+  .catch((error) => {
+      console.error(error);
+      
+  })
+}, [])
+
+
+  console.log(openBookDetails);
+  
   
   return (
-    <>
+    <div className="mt-40">
       <Swiper
         slidesPerView={3}
         spaceBetween={10}
@@ -23,8 +53,9 @@ export default function BooksHome() {
         className="mySwiper"
       >
         {books.map((myBooks: any) => (
-          <SwiperSlide   key={myBooks._id}>
+          <SwiperSlide className="cursor-pointer" key={myBooks._id} onClick={() => getBookId(myBooks._id)}>
             <div
+       
               className="border rounded-md px-5 py-5 w-full mx-2 md:mx-auto lg:w-64 h-44 overflow-y-scroll lg:overflow-y-auto z-10"
             >
               <img
@@ -44,6 +75,7 @@ export default function BooksHome() {
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+      {openBookDetails && bookId !== null && <BookDetails setOpenBookDetails={setOpenBookDetails} bookId={bookId} books={books}/>}
+    </div>
   );
 }
