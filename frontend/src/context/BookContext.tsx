@@ -2,6 +2,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 
+// Définition du type pour un livre
 interface Book {
   id: number;
   title: string;
@@ -15,6 +16,7 @@ interface Book {
 
 interface BookContextProps {
   books: Book[];
+  setBooks: any;
 }
 
 interface BookContextProviderProps {
@@ -33,13 +35,14 @@ export const BookContextProvider: React.FC<BookContextProviderProps> = ({
       .get<Book[]>("http://localhost:8001/api/books")
       .then((response: AxiosResponse<Book[]>) => {
         setBooks(response.data); 
+        console.log("resp", response.data);
       })
       .catch((error) => {
-        console.error("Erreur get books : ", error);
+        console.error("Erreur lors de la récupération des livres : ", error);
       });
-  }, []);
+  }, [setBooks]);
 
   return (
-    <BookContext.Provider value={{ books }}>{children}</BookContext.Provider>
+    <BookContext.Provider value={{ books, setBooks }}>{children}</BookContext.Provider>
   );
 };
