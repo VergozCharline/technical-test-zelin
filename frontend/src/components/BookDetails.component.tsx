@@ -1,6 +1,5 @@
 import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react'
 
 type Props = {
     setOpenBookDetails: (value: boolean) => void;
@@ -8,45 +7,25 @@ type Props = {
     bookId: any;
   };
 
-  interface Book {
-    id: number;
-    title: string;
-    author: string;
-    date: string;
-    rate: number;
-    note: string;
-    last_modification: string;
-    modification_date: string;
-  }
 
 export default function BookDetails({ setOpenBookDetails, bookId, books }:Props) {
+  const [deleteRefetch, setDeleteRefetch] = useState(false);
+  const [deleteBookID, setDeleteBookID] = useState<any>(null); 
 
-  const [deleteOneBook, setDeleteOneBook] = useState<Book[]>([]);
-  
-  const { id } = useParams();
-  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get<Book[]>('http://localhost:8001/api/books');
-        setDeleteOneBook(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const deleteBook = async (bookId: number) => {
-    try {
-      await axios.delete(`http://localhost:8001/api/books/${bookId}`);
-      const updatedBooksResponse = await axios.get<Book[]>('http://localhost:8001/api/books');
-      setDeleteOneBook(updatedBooksResponse.data);
-    } catch (error) {
-      console.error(error);
+    if(deleteBookID){
+      axios.delete(`http://localhost:8001/api/books/${deleteBookID}`)
+        .then((response) => {
+          console.log("Delete response: ", response);
+          setOpenBookDetails(false);
+          setDeleteRefetch(!deleteRefetch);
+        })
+        .catch((error) => {
+          console.error("Delete error: ", error);
+        });
     }
-  };
+  }, [deleteBookID, deleteRefetch, setOpenBookDetails]);
+
 
   return (
     <section className="mt-36 lg:mx-20">
@@ -67,8 +46,8 @@ export default function BookDetails({ setOpenBookDetails, bookId, books }:Props)
             >
                <button
                type="button"
-          className="absolute right-7 lg:right-[20%] top-12 lg:top-[28%] border rounded-full px-3 py-1 hover:text-white hover:bg-hoverPurple z-50"
-          onClick={() => deleteBook(myBooks._id)}
+          className="absolute right-7 lg:right-[20%] top-40lg:top-[28%] border rounded-full px-3 py-1 hover:text-white hover:bg-hoverPurple z-50"
+          onClick={() => setDeleteBookID(bookId)}
         >
           Supprimer
         </button>

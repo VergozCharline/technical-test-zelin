@@ -1,11 +1,12 @@
-import axios from "axios";
-import React, { useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import React, { useEffect, useState } from "react";
 
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 
 type Props = {
   setOpenNewBook: (value: boolean) => void;
+  books: any;
 };
 
 interface response {
@@ -20,9 +21,10 @@ export default function NewBook({ setOpenNewBook }: Props) {
   const [rate, setRate] = useState<string>();
   const [publicationDate, setPublicationDate] = useState<string>();
 
+
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios
+      axios
       .post<response>("http://localhost:8001/api/books", {
         title,
         author,
@@ -38,7 +40,7 @@ export default function NewBook({ setOpenNewBook }: Props) {
             title: "Livre crée avec succès",
             icon: "success"
           });
-          setOpenNewBook(false)
+          setOpenNewBook(false);
         } else {
           Swal.fire({
             title: "Une erreur s'est produite",
@@ -49,9 +51,7 @@ export default function NewBook({ setOpenNewBook }: Props) {
       .catch((error) => {
         console.error("Error created book", error);
       });
-
   };
-  
 
   return (
     <section className="fixed top-0 right-0 left-0 h-screen flex justify-center items-center backdrop-blur-md z-50">
@@ -133,7 +133,6 @@ export default function NewBook({ setOpenNewBook }: Props) {
           <button
             type="submit"
             className="border-2 border-hoverPurple rounded-md w-max px-5 lg:px-10 py-1 lg:py-2 mx-auto hover:text-white hover:bg-hoverPurple"
-            // onClick={() => setOpenNewBook(false)}
           >
             Valider
           </button>

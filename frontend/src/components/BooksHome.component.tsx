@@ -6,38 +6,34 @@ import "swiper/css/pagination";
 
 import { Pagination } from "swiper/modules";
 import { useContext, useEffect, useState } from "react";
-import { BookContext } from "../context/BookContext";
+// import { BookContext } from "../context/BookContext";
 import BookDetails from "./BookDetails.component";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function BooksHome() {
-  const { books }: any = useContext(BookContext);
-  const [bookId, setBookId] = useState<any | null>(null);
+export default function BooksHome({ books, setBooks }:any) {
+  // const { books }: any = useContext(BookContext);
+  const [bookId, setBookId] = useState(null);
   const [openBookDetails, setOpenBookDetails] = useState<boolean>(false);
-  const [getBookDetails, setBookDetails] = useState({})
-  const [refetchDelete, setRefetchDelete] = useState(false)
-
-  const { id } = useParams();
+  const [refetchCreateBook, setRefetchCreateBook] = useState(false);
 
   const getBookId = (id:any) =>{
       setBookId(id);
       setOpenBookDetails(true)
   }
+ 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8001/api/books")
+      .then((response) => {
+        console.log("respppp", response.data);
+        setBooks(response.data);
+        setRefetchCreateBook(!refetchCreateBook);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des livres : ", error);
+      });
+  }, [setRefetchCreateBook]);
 
-useEffect(() => {
-  axios.get(`http://localhost:8001/api/books/${id}`)
-  .then(response => {
-      console.log(response);
-      setBookDetails(response.data)
-      setRefetchDelete(!refetchDelete)
-  })
-  .catch((error) => {
-      console.error(error);
-      
-  })
-}, [setRefetchDelete])
-  
   return (
     <div className="mt-40">
       <Swiper
@@ -72,7 +68,7 @@ useEffect(() => {
           </SwiperSlide>
         ))}
       </Swiper>
-      {openBookDetails && bookId !== null && <BookDetails setOpenBookDetails={setOpenBookDetails} bookId={bookId} books={books}/>}
+      {openBookDetails && <BookDetails setOpenBookDetails={setOpenBookDetails} bookId={bookId} books={books} />}
     </div>
   );
 }
