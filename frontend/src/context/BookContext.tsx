@@ -1,5 +1,5 @@
 // BookContext.tsx
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 
 // Définition du type pour un livre
@@ -10,6 +10,7 @@ interface Book {
   date: string;
   rate: number;
   note: string;
+  genre: string;
   last_modification: string;
   modification_date: string;
 }

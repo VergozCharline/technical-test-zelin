@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
@@ -18,6 +18,7 @@ export default function NewBook({ setOpenNewBook }: Props) {
   const [author, setAuthor] = useState("");
   const [date, setDate] = useState<string>("");
   const [note, setNote] = useState("");
+  const [genre, setGenre] = useState("");
   const [rate, setRate] = useState<string>();
   const [publicationDate, setPublicationDate] = useState<string>();
 
@@ -30,6 +31,7 @@ export default function NewBook({ setOpenNewBook }: Props) {
         author,
         date,
         note,
+        genre,
         rate,
         publicationDate
       })
@@ -92,6 +94,17 @@ export default function NewBook({ setOpenNewBook }: Props) {
                 name="author"
                 id="author"
                 onChange={(e) => setAuthor(e.target.value)}
+                required
+              />
+            </div>
+            <div className="flex flex-col lg:w-1/2">
+              <label htmlFor="genre">Genre</label>
+              <input
+                className="border py-1 px-2 rounded-md"
+                type="text"
+                name="genre"
+                id="genre"
+                onChange={(e) => setGenre(e.target.value)}
                 required
               />
             </div>
