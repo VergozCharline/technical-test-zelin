@@ -24,6 +24,7 @@ const mapInfos = books.filter((bookIdUpdate:any) => bookIdUpdate._id === bookId)
   const [genre, setGenre] = useState(mapInfos.genre || "");
   const [rate, setRate] = useState<string>(mapInfos.rate || "");
   const [publicationDate, setPublicationDate] = useState<string>();
+  const [completed, setCompleted] = useState(false);
 
   console.log(books);
   
@@ -47,6 +48,7 @@ const mapInfos = books.filter((bookIdUpdate:any) => bookIdUpdate._id === bookId)
             title: "Modifications enregistrées",
             icon: "success"
           });
+          setCompleted(!completed)
           setOpenUpdateBook(false);
         } else {
           Swal.fire({
