@@ -21,6 +21,7 @@ export default function NewBook({ setOpenNewBook }: Props) {
   const [genre, setGenre] = useState("");
   const [rate, setRate] = useState<string>();
   const [publicationDate, setPublicationDate] = useState<string>();
+  const [completed, setCompleted] = useState(false);
 
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,6 +43,7 @@ export default function NewBook({ setOpenNewBook }: Props) {
             title: "Livre crée avec succès",
             icon: "success"
           });
+          setCompleted(!completed);
           setOpenNewBook(false);
         } else {
           Swal.fire({

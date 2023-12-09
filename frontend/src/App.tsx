@@ -21,7 +21,7 @@ function App() {
         <BooksHome books={books} setData={setData} data={data} setBooks={setBooks}/>
         {openSearch && <Search />}
         {openNewBook && <NewBook setOpenNewBook={setOpenNewBook} books={books} />}
-        <Footer />
+        <Footer setOpenSearch={setOpenSearch} setOpenNewBook={setOpenNewBook} />
       </div>
     </Router>
   );
