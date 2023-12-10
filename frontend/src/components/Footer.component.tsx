@@ -1,22 +1,9 @@
-import { Link } from "react-router-dom";
-
-type Props = {
-  setOpenNewBook: (value: boolean) => void;
-}
-
-
-export default function Footer({ setOpenNewBook }:Props) {
+export default function Footer() {
   return (
-    <footer className="relative bottom-0 right-0 left-0 mt-36">
-      <div className="flex items-center justify-evenly">
-
-     <Link to="/" aria-label="retour à la page d'accueil">
-          <img className="scale-150" src="/logo.webp" alt="Logo" width={100} height={100} />
-        </Link>
-        <div>
-          
-      </div>
-        </div>
+    <footer className="py-5">
+      <p className="text-sm opacity-60 text-end mr-10 text-textPurple">
+        Charline Vergoz
+      </p>
     </footer>
-  )
+  );
 }

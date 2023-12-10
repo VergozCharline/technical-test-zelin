@@ -15,11 +15,11 @@ export default function HomePage({
   openNewBook,
 }: Props) {
   return (
-    <div>
+    <div className="bg-gradient-to-b from-black to-slate-900">
       <Header setOpenNewBook={setOpenNewBook} />
       <BooksHome />
       {openNewBook && <NewBook setOpenNewBook={setOpenNewBook} />}
-      <Footer setOpenNewBook={setOpenNewBook} />
+      <Footer />
     </div>
   );
 }

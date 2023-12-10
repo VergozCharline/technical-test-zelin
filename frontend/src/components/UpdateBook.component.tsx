@@ -7,7 +7,6 @@ import { BookContext } from "../context/BookContext";
 
 type Props = {
   setOpenUpdateBook: (value: boolean) => void;
-  books: any;
   bookId: any;
 };
 
@@ -17,19 +16,22 @@ interface response {
 
 export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
   const { books, setBooks }: any = useContext(BookContext);
+
   const mapInfos = books.filter(
     (bookIdUpdate: any) => bookIdUpdate._id === bookId
   )[0];
 
-  const [title, setTitle] = useState(mapInfos.title || "");
-  const [author, setAuthor] = useState(mapInfos.author || "");
-  const [date, setDate] = useState<string>(mapInfos.date || "");
-  const [note, setNote] = useState(mapInfos.note || "");
-  const [genre, setGenre] = useState(mapInfos.genre || "");
-  const [rate, setRate] = useState<string>(mapInfos.rate || "");
-  const [picture, setPicture] = useState(mapInfos.picture || "");
+  console.log(bookId);
+  
+
+  const [title, setTitle] = useState<string>(mapInfos.title || "");
+  const [author, setAuthor] = useState<string>(mapInfos.author || "");
+  const [date, setDate] = useState<number>(mapInfos.date || "");
+  const [note, setNote] = useState<string>(mapInfos.note || "");
+  const [genre, setGenre] = useState<string>(mapInfos.genre || "");
+  const [rate, setRate] = useState<number>(mapInfos.rate || "");
+  const [picture, setPicture] = useState<string>(mapInfos.picture || "");
   const [publicationDate, setPublicationDate] = useState<string>();
-  const [completed, setCompleted] = useState(false);
 
   const currentDate = new Date();
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +40,7 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
       .patch<response>(`http://localhost:8001/api/books/${bookId}`, {
         title,
         author,
+        picture,
         date,
         note,
         genre,
@@ -58,6 +61,7 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
                     ...book,
                     title: response.data.book.title,
                     author: response.data.book.author,
+                    picture: response.data.book.picture,
                     date: response.data.book.date,
                     note: response.data.book.note,
                     genre: response.data.book.genre,
@@ -65,13 +69,11 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
                     lastModification: response.data.book.lastModification,
                   };
                 }
-                return book; 
+                return book;
               });
               return updatedBooks;
             });
           }
-
-          setCompleted(!completed);
           setOpenUpdateBook(false);
         } else {
           Swal.fire({
@@ -86,18 +88,18 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
   };
 
   return (
-    <section className="relative top-0 right-0 left-0 h-screen flex justify-center items-center backdrop-blur-md z-50">
-      <div className="w-full mx-auto shadow-xl rounded-xl bg-white border border-purple-100 py-10">
+    <section className="flex justify-center items-center backdrop-blur-md z-50 ">
+      <div className=" relative w-full mx-auto shadow-xl rounded-md bg-gradient-to-b from-black to-slate-900 border border-purple-100 py-10 max-md:h-[90vh] max-md:overflow-y-scroll">
         <button
           type="button"
-          className="absolute right-7 lg:right-[10%] top-12 lg:top-[5%] border rounded-full px-3 py-1 hover:text-white hover:bg-hoverPurple"
+          className="absolute right-7 lg:right-[8%] top-12 lg:top-[9%] border rounded-full px-3 py-1 hover:bg-colorBorder  text-textPurple"
           onClick={() => setOpenUpdateBook(false)}
         >
           X
         </button>
         <form
           onSubmit={submitForm}
-          className="px-5 lg:px-10 flex flex-col gap-5 lg:gap-10"
+          className="px-5 lg:px-10 flex flex-col gap-5 lg:gap-7"
         >
           <div className="flex justify-evenly items-center">
             <img
@@ -109,13 +111,13 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
             />
             <div className="flex flex-col">
               <label
-                className="text-lg font-semibold opacity-75"
+                className="text-textPurple text-lg font-semibold opacity-75"
                 htmlFor="picture"
               >
                 Image URL
               </label>
               <input
-                className="border py-1 px-2 rounded-md"
+                className="border py-1 px-2 rounded-md bg-gradient-to-b from-black to-slate-900 text-textPurple"
                 type="text"
                 name="picture"
                 id="picture"
@@ -134,13 +136,13 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
           <div className="flex flex-col lg:flex-row gap-5 lg:gap-10">
             <div className="flex flex-col lg:w-1/2">
               <label
-                className="text-lg font-semibold opacity-75"
+                className="text-textPurple text-lg font-semibold opacity-75"
                 htmlFor="title"
               >
                 Titre
               </label>
               <input
-                className="border py-1 px-2 rounded-md"
+                className=" bg-gradient-to-b from-black to-slate-900 text-textPurple border py-1 px-2 rounded-md"
                 type="text"
                 name="title"
                 id="title"
@@ -152,13 +154,13 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
             </div>
             <div className="flex flex-col lg:w-1/2">
               <label
-                className="text-lg font-semibold opacity-75"
+                className="text-textPurple text-lg font-semibold opacity-75"
                 htmlFor="author"
               >
                 Auteur
               </label>
               <input
-                className="border py-1 px-2 rounded-md"
+                className=" bg-gradient-to-b from-black to-slate-900 text-textPurple border py-1 px-2 rounded-md"
                 type="text"
                 name="author"
                 id="author"
@@ -169,13 +171,13 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
             </div>
             <div className="flex flex-col lg:w-1/2">
               <label
-                className="text-lg font-semibold opacity-75"
+                className="text-textPurple text-lg font-semibold opacity-75"
                 htmlFor="genre"
               >
                 Genre
               </label>
               <input
-                className="border py-1 px-2 rounded-md"
+                className=" bg-gradient-to-b from-black to-slate-900 text-textPurple border py-1 px-2 rounded-md"
                 type="text"
                 name="genre"
                 id="genre"
@@ -188,45 +190,61 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
           <div className="flex gap-2 lg:gap-10">
             <div className="flex flex-col w-1/2">
               <label
-                className="text-lg font-semibold opacity-75"
+                className="text-textPurple text-lg font-semibold opacity-75"
                 htmlFor="date"
               >
-                Date de publication
+                Publié en
               </label>
               <input
-                className="border py-1 px-2 rounded-md"
-                type="text"
+                className=" bg-gradient-to-b from-black to-slate-900 text-textPurple border py-1 px-2 rounded-md"
+                type="number"
                 name="date"
                 id="date"
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  if (!isNaN(value)) {
+                    setDate(value);
+                  }
+                }}
                 required
               />
             </div>
             <div className="flex flex-col w-1/2">
               <label
-                className="text-lg font-semibold opacity-75"
+                className="text-textPurple text-lg font-semibold opacity-75"
                 htmlFor="rate"
               >
                 Note /5
               </label>
               <input
-                className="border py-1 px-2 rounded-md"
+                className=" bg-gradient-to-b from-black to-slate-900 text-textPurple border py-1 px-2 rounded-md"
                 type="number"
                 name="rate"
                 id="rate"
                 value={rate}
-                onChange={(e) => setRate(e.target.value)}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  if (!isNaN(value) && value <= 5) {
+                    setRate(value);
+                  } else {
+                    setRate(5);
+                  }
+                }}
+                max="5"
                 required
               />
             </div>
           </div>
           <div className="flex flex-col">
-            <label className="text-lg font-semibold opacity-75" htmlFor="note">
+            <label
+              className="text-textPurple text-lg font-semibold opacity-75"
+              htmlFor="note"
+            >
               Commentaire
             </label>
             <textarea
-              className="border py-1 px-2 rounded-md h-20 max-h-40"
+              className="bg-gradient-to-b from-black to-slate-900 text-textPurple border py-1 px-2 rounded-md h-28 max-h-40"
               name="note"
               id="note"
               value={note}
@@ -236,7 +254,7 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
           </div>
           <button
             type="submit"
-            className="border-2 border-hoverPurple rounded-md w-max px-5 lg:px-10 py-1 lg:py-2 mx-auto hover:text-white hover:bg-hoverPurple"
+            className="border-2 text-textPurple border-textPurple rounded-md w-max px-5 lg:px-10 py-1 lg:py-2 mx-auto hover:text-white hover:bg-colorBorder font-bold"
           >
             Valider
           </button>

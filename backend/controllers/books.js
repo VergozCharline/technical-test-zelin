@@ -14,28 +14,28 @@ async function getCollection() {
         return res.status(400).json({ message: "Please complete all fields" });
       }
   
-      const collection = await getCollection(); 
+      const collection = await getCollection();
       const result = await collection.insertOne({
-        title,
-        picture,
-        author,
-        date,
+        title: String(title), 
+        picture: String(picture),
+        author: String(author),
+        date: Number(date),
         publicationDate: new Date(),
-        note,
-        genre,
+        note: String(note),
+        genre: String(genre),
         rate: Number(rate),
         lastModification: null,
       });
   
       const createdBook = {
         _id: result.insertedId,
-        title,
-        picture,
-        author,
-        date,
+        title: String(title), 
+        picture: String(picture),
+        author: String(author),
+        date: Number(date),
         publicationDate: new Date(),
-        note,
-        genre,
+        note: String(note),
+        genre: String(genre),
         rate: Number(rate),
         lastModification: null,
       };
@@ -84,6 +84,9 @@ async function getAllBooks(req, res) {
       const bookID = req.params.bookID;
       const updatedData = req.body;
 
+      if ('rate' in updatedData && (updatedData.rate < 0 || updatedData.rate > 5)) {
+        return res.status(400).json({ message: "Invalid rate value. Rate should be between 0 and 5." });
+      }
       updatedData.lastModification = new Date();
   
       delete updatedData._id;
