@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import "./App.css";
-
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
+
+import "./App.css";
 
 import { BookContext } from "./context/BookContext";
 import Search from "./pages/search";
@@ -24,6 +24,7 @@ function App() {
                   books={books}
                   setOpenNewBook={setOpenNewBook}
                   openNewBook={openNewBook}
+                  setBooks={setBooks}
                 />
               }
             />

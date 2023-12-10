@@ -18,6 +18,8 @@ interface Book {
 interface BookContextProps {
   books: Book[];
   setBooks: any;
+  setRefetchData: (value: boolean) => void;
+  refetchData:boolean;
 }
 
 interface BookContextProviderProps {
@@ -33,19 +35,19 @@ export const BookContextProvider: React.FC<BookContextProviderProps> = ({
   const [refetchData, setRefetchData] = useState(false);
 
   useEffect(() => {
+    setRefetchData(!refetchData);
     axios
       .get<Book[]>("http://localhost:8001/api/books")
       .then((response: AxiosResponse<Book[]>) => {
         setBooks(response.data); 
-        console.log("resp", response.data);
         setRefetchData(!refetchData);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des livres : ", error);
       });
-  }, [setBooks]);
+  }, [setBooks, setRefetchData]);
 
   return (
-    <BookContext.Provider value={{ books, setBooks }}>{children}</BookContext.Provider>
+    <BookContext.Provider value={{ books, setBooks, setRefetchData, refetchData }}>{children}</BookContext.Provider>
   );
 };
