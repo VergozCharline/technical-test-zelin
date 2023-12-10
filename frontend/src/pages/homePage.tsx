@@ -11,7 +11,6 @@ type Props = {
 };
 
 export default function HomePage({
-  books,
   setOpenNewBook,
   openNewBook,
 }: Props) {

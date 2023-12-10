@@ -31,7 +31,6 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
   const [publicationDate, setPublicationDate] = useState<string>();
   const [completed, setCompleted] = useState(false);
 
-  console.log(books);
   const currentDate = new Date();
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

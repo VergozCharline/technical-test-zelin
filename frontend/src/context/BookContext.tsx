@@ -39,7 +39,6 @@ export const BookContextProvider: React.FC<BookContextProviderProps> = ({
     axios
       .get<Book[]>("http://localhost:8001/api/books")
       .then((response: AxiosResponse<Book[]>) => {
-        console.log("resp", response.data);
         setBooks(response.data); 
         setRefetchData(!refetchData);
       })

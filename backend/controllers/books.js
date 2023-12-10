@@ -41,7 +41,6 @@ async function getCollection() {
       };
 
       res.status(201).json({ message: 'Book create successfully', book: createdBook });
-      console.log(result);
     } catch (error) {
       console.error("Error ", error);
       res.status(500).json({ message: "Error when creating the book" });
@@ -64,8 +63,7 @@ async function getAllBooks(req, res) {
   async function getOneBook(req, res) {
     try {
       const collection = await getCollection();
-      const bookID = req.params.bookID;
-      console.log(bookID);
+      const bookID = req.params.bookID;;
       const result = await collection.findOne({
         _id: ObjectId.createFromHexString(bookID),
       });
@@ -94,7 +92,6 @@ async function getAllBooks(req, res) {
         { _id: ObjectId.createFromHexString(bookID) },
         { $set: updatedData }
       );
-      console.log(result);
   
       if (result.matchedCount > 0) {
         const updatedBook = await collection.findOne({ _id: ObjectId.createFromHexString(bookID) });
