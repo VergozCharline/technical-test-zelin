@@ -91,7 +91,7 @@ export default function BookDetails({
                       </div>
                     </div>
 
-                    <div className="lg:w-[70%] mx-auto lg:mt-20 border px-2 md:px-10 py-3 md:py-7 rounded-xl relative">
+                    <div className="lg:w-[70%] mx-auto lg:mt-10 border px-2 md:px-10 py-3 md:py-7 rounded-xl relative">
                       <div className="flex gap-4">
                         <p className="text-sm lg:text-md font-semibold opacity-60 mb-5">
                           Note :
@@ -101,7 +101,7 @@ export default function BookDetails({
                       <p className="text-sm lg:text-md font-semibold opacity-60 mb-2 md:mb-5">
                         Commentaire :
                       </p>
-                      <p className="h-40 overflow-y-scroll">{myBooks.note}</p>
+                      <p className="max-h-40 overflow-y-scroll">{myBooks.note}</p>
                     </div>
                     <button
                       type="button"

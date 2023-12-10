@@ -1,9 +1,4 @@
-import { useContext } from "react";
-
-// import { BookContext } from "../context/BookContext";
-
 export default function MyBooks({ books }:any) {
-  // const { books }: any = useContext(BookContext);
 
   return (
     <div className="mt-36 lg:mx-20">

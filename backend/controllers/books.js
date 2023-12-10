@@ -8,19 +8,21 @@ async function getCollection() {
   
   async function createBook(req, res) {
     try {
-      const { title, author, date, note, rate, lastModification } = req.body;
+      const { title, picture, author, date, note, genre, rate, lastModification } = req.body;
 
-      if (!title || !author || !date || !note) {
+      if (!title || !author || !date || !note || !genre || !picture) {
         return res.status(400).json({ message: "Please complete all fields" });
       }
   
       const collection = await getCollection(); 
       const result = await collection.insertOne({
         title,
+        picture,
         author,
         date,
         publicationDate: new Date(),
         note,
+        genre,
         rate: Number(rate),
         lastModification: lastModification ? new Date() : null,
       });

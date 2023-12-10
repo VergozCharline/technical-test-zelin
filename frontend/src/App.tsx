@@ -1,27 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
-import "./App.css"
-import { BrowserRouter as Router } from 'react-router-dom';
-import Header from './components/Header.component'; 
-import Footer from './components/Footer.component';
-import Search from './components/Search.component';
-import NewBook from './components/NewBook.component';
-import BooksHome from './components/BooksHome.component';
-import { BookContext } from './context/BookContext';
+import { useContext, useState } from "react";
+import "./App.css";
+
+import { BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
+import { BookContext } from "./context/BookContext";
+import Search from "./pages/search";
+import HomePage from "./pages/homePage";
 
 function App() {
-  const [openSearch, setOpenSearch] = useState(false);
   const [openNewBook, setOpenNewBook] = useState(false);
-  const [data, setData] = useState();
   const { books, setBooks }: any = useContext(BookContext);
-  
+
   return (
     <Router>
       <div>
-        <Header setOpenSearch={setOpenSearch} setOpenNewBook={setOpenNewBook} />
-        <BooksHome books={books} setData={setData} data={data} setBooks={setBooks}/>
-        {openSearch && <Search />}
-        {openNewBook && <NewBook setOpenNewBook={setOpenNewBook} books={books} />}
-        <Footer setOpenSearch={setOpenSearch} setOpenNewBook={setOpenNewBook} />
+        <Routes>
+          <Route path="/">
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  books={books}
+                  setOpenNewBook={setOpenNewBook}
+                  openNewBook={openNewBook}
+                />
+              }
+            />
+            <Route path="/search" element={<Search books={books} setOpenNewBook={setOpenNewBook} />} />
+          </Route>
+        </Routes>
       </div>
     </Router>
   );

@@ -59,13 +59,13 @@ export default function NewBook({ setOpenNewBook }: Props) {
 
   return (
     <section className="fixed top-0 right-0 left-0 h-screen flex justify-center items-center backdrop-blur-md z-50">
-      <div className="w-[95%] md:w-[80%] lg:w-[70%] h-[95vh] lg:h-[60vh] mx-auto shadow-xl rounded-xl bg-white border border-purple-100">
-        <h2 className="px-5 lg:px-10 py-3 mt-14 rounded-xl shadow-md text-center text-xl lg:text-2xl border-2 border-hoverPurple w-max mx-auto">
+      <div className="w-[95%] md:w-[80%] lg:w-[70%] mx-auto shadow-xl rounded-xl bg-white border border-purple-100 py-10">
+        <h2 className="px-5 lg:px-10 py-3 rounded-xl shadow-md text-center text-xl lg:text-2xl border-2 border-hoverPurple w-max mx-auto">
           Ajouter un livre
         </h2>
         <button
         type="button"
-          className="absolute right-7 lg:right-[20%] top-12 lg:top-[23%] border rounded-full px-3 py-1 hover:text-white hover:bg-hoverPurple"
+          className="absolute right-7 lg:right-[20%] top-12 lg:top-[10%] border rounded-full px-3 py-1 hover:text-white hover:bg-hoverPurple"
           onClick={() => setOpenNewBook(false)}
         >
           X
@@ -138,7 +138,7 @@ export default function NewBook({ setOpenNewBook }: Props) {
           <div className="flex flex-col">
             <label htmlFor="note">Commentaire</label>
             <textarea
-              className="border py-1 px-2 rounded-md h-40"
+              className="border py-1 px-2 rounded-md h-20 md:h-40"
               name="note"
               id="note"
               onChange={(e) => setNote(e.target.value)}
