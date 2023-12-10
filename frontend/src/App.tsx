@@ -24,6 +24,7 @@ function App() {
                   books={books}
                   setOpenNewBook={setOpenNewBook}
                   openNewBook={openNewBook}
+                  setBooks={setBooks}
                 />
               }
             />

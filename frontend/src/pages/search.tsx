@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import Header from "../components/Header.component";
+import { BookContext } from "../context/BookContext";
 
-export default function Search({ books, setOpenNewBook }: any) {
+export default function Search({ setOpenNewBook }: any) {
+    const { books }:any = useContext(BookContext);
   const [searchValue, setSearchValue] = useState("");
+
 
   const searchBookByTitle = books.filter((book: any) =>
     book.title.toLowerCase().includes(searchValue.toLocaleLowerCase())

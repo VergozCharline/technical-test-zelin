@@ -7,6 +7,7 @@ type Props = {
   books: any;
   setOpenNewBook: (value: boolean) => void;
   openNewBook: boolean;
+  setBooks:any;
 };
 
 export default function HomePage({
@@ -17,8 +18,8 @@ export default function HomePage({
   return (
     <div>
       <Header setOpenNewBook={setOpenNewBook} />
-      <BooksHome books={books} />
-      {openNewBook && <NewBook setOpenNewBook={setOpenNewBook} books={books} />}
+      <BooksHome />
+      {openNewBook && <NewBook setOpenNewBook={setOpenNewBook} />}
       <Footer setOpenNewBook={setOpenNewBook} />
     </div>
   );

@@ -24,10 +24,23 @@ async function getCollection() {
         note,
         genre,
         rate: Number(rate),
-        lastModification: lastModification ? new Date() : null,
+        lastModification: null,
       });
   
-      res.status(201).json({ message: 'Book create successfully' });
+      const createdBook = {
+        _id: result.insertedId,
+        title,
+        picture,
+        author,
+        date,
+        publicationDate: new Date(),
+        note,
+        genre,
+        rate: Number(rate),
+        lastModification: null,
+      };
+
+      res.status(201).json({ message: 'Book create successfully', book: createdBook });
       console.log(result);
     } catch (error) {
       console.error("Error ", error);
@@ -72,6 +85,8 @@ async function getAllBooks(req, res) {
       const collection = await getCollection();
       const bookID = req.params.bookID;
       const updatedData = req.body;
+
+      updatedData.lastModification = new Date();
   
       delete updatedData._id;
   
@@ -82,7 +97,9 @@ async function getAllBooks(req, res) {
       console.log(result);
   
       if (result.matchedCount > 0) {
-        res.status(200).json({ message: "Book updated succesfully" });
+        const updatedBook = await collection.findOne({ _id: ObjectId.createFromHexString(bookID) });
+  
+        res.status(200).json({ message: "Book updated successfully", book: updatedBook });
       } else {
         res.status(404).json({ message: "Book not found" });
       }
@@ -91,6 +108,7 @@ async function getAllBooks(req, res) {
       res.status(500).json({ message: "Server error" });
     }
   }
+  
 
   async function deleteBook(req, res) {
     try {

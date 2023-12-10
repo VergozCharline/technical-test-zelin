@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -7,9 +7,11 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import BookDetails from "./BookDetails.component";
+import { BookContext } from "../context/BookContext";
 
 
-export default function BooksHome({ books }:any) {
+export default function BooksHome() {
+  const { books }:any = useContext(BookContext);
   const [bookId, setBookId] = useState(null);
   const [openBookDetails, setOpenBookDetails] = useState<boolean>(false);
 

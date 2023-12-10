@@ -32,16 +32,17 @@ export default function BookDetails({
     }
   }, [oneBookID, deleteRefetch, setOpenBookDetails]);
 
+
   return (
     <section className="mt-36 lg:mx-20">
       <div className="fixed top-0 right-0 left-0 h-screen flex justify-center items-center backdrop-blur-md z-50">
-        <button
+        {!openUpdateBook && <button
           type="button"
           className="absolute right-7 lg:right-[18%] top-12 lg:top-[10%] border rounded-full px-3 py-1 hover:text-white hover:bg-hoverPurple z-50  bg-white md:bg-transparent"
           onClick={() => setOpenBookDetails(false)}
         >
           X
-        </button>
+        </button>}
         <div className="flex flex-wrap gap-5 w-full ">
           {books
             .filter((myBooks: any) => myBooks._id === bookId)
@@ -58,6 +59,21 @@ export default function BookDetails({
                   />
                 ) : (
                   <>
+                      <p className="text-sm opacity-75 text-end">Livre ajouté le : {new Date(myBooks.publicationDate).toLocaleDateString('fr-FR', {
+                              day: 'numeric',
+                              month: 'numeric',
+                              year: 'numeric',
+                              hour: 'numeric',
+                              minute: 'numeric',
+                      })}</p>
+                      {myBooks.lastModification !== null &&   <p className="text-sm opacity-75 text-end">Dernière modification le : {new Date(myBooks.lastModification).toLocaleDateString('fr-FR', {
+                              day: 'numeric',
+                              month: 'numeric',
+                              year: 'numeric',
+                              hour: 'numeric',
+                              minute: 'numeric',
+                      })}</p>}
+                     
                     <div className="flex items-center justify-evenly mb-10">
                       <img
                         className="rounded-md max-md:w-20 max-md:mr-2"
