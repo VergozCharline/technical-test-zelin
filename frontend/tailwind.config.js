@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       colors:{
         hoverPurple: "#FF81E8",
+        textPurple: "#F4DCFF",
+        colorBorder: "#440071"
       }
     },
   },

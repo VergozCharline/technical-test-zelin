@@ -10,7 +10,7 @@ import HomePage from "./pages/homePage";
 
 function App() {
   const [openNewBook, setOpenNewBook] = useState(false);
-  const { books, setBooks }: any = useContext(BookContext);
+  const { books, setBooks }:any = useContext(BookContext);
 
   return (
     <Router>
@@ -28,7 +28,7 @@ function App() {
                 />
               }
             />
-            <Route path="/search" element={<Search books={books} setOpenNewBook={setOpenNewBook} />} />
+            <Route path="/search" element={<Search setOpenNewBook={setOpenNewBook} openNewBook={openNewBook}/>} />
           </Route>
         </Routes>
       </div>

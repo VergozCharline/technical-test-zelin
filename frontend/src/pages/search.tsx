@@ -1,24 +1,40 @@
 import { useContext, useState } from "react";
 
-import Header from "../components/Header.component";
 import { BookContext } from "../context/BookContext";
+import Header from "../components/Header.component";
+import BookDetails from "../components/BookDetails.component";
+import NewBook from "../components/NewBook.component";
 
-export default function Search({ setOpenNewBook }: any) {
-    const { books }:any = useContext(BookContext);
+type Props={
+  setOpenNewBook: (value: boolean) => void;
+  openNewBook: boolean;
+}
+
+export default function Search({ setOpenNewBook, openNewBook }: Props) {
+  const { books }: any = useContext(BookContext);
+  const [bookId, setBookId] = useState(null);
   const [searchValue, setSearchValue] = useState("");
-
+  const [openBookDetails, setOpenBookDetails] = useState<boolean>(false);
 
   const searchBookByTitle = books.filter((book: any) =>
     book.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
   );
 
+  const getBookId = (id: any) => {
+    setBookId(id);
+    setOpenBookDetails(true);
+  };
+
   return (
-    <section className="">
-        <Header setOpenNewBook={setOpenNewBook}/>
-      <div className="flex flex-col justify-center items-center mt-36 mb-20 mx-7 md:mx-20 ">
-        <label htmlFor="search" className="text-lg font-semibold opacity-75">Vous cherchez un livre ?</label>
+    <section className="bg-gradient-to-b from-black to-slate-900 min-h-[100vh]">
+      <Header setOpenNewBook={setOpenNewBook} />
+      {openNewBook && <NewBook setOpenNewBook={setOpenNewBook} />}
+      <div className="flex flex-col justify-center items-center pt-36 pb-20 px-7 md:px-20 ">
+        <label htmlFor="search" className="text-lg font-semibold opacity-75 text-textPurple">
+          Vous cherchez un livre ?
+        </label>
         <input
-          className="border py-1 px-2 rounded-md"
+          className="border py-1 px-2 rounded-md bg-gradient-to-b from-black to-slate-900 text-textPurple"
           type="text"
           name="search"
           id="search"
@@ -28,25 +44,32 @@ export default function Search({ setOpenNewBook }: any) {
         <div className="flex flex-wrap gap-8 mt-10 md:mt-20 items-center justify-center">
           {searchValue
             ? searchBookByTitle.map((book: any) => (
-                <img
-                  className="rounded-md"
-                  src={book.picture}
-                  alt={book.title}
-                  width={150}
-                  height={150}
-                />
+                <button type="button" onClick={() => getBookId(book._id)}>
+                  <img
+                    className="rounded-md min-h-[14.5rem] max-h-[14.5rem]"
+                    src={book.picture}
+                    alt={book.title}
+                    width={150}
+                    height={150}
+                  />
+                </button>
               ))
             : books.map((allBooks: any) => (
-                <img
-                  className="rounded-md"
-                  src={allBooks.picture}
-                  alt={allBooks.title}
-                  width={150}
-                  height={150}
-                />
+                <button type="button" onClick={() => getBookId(allBooks._id)}>
+                  <img
+                    className="rounded-md min-h-[14.5rem] max-h-[14.5rem]"
+                    src={allBooks.picture}
+                    alt={allBooks.title}
+                    width={150}
+                    height={150}
+                  />
+                </button>
               ))}
         </div>
       </div>
+      {openBookDetails && (
+        <BookDetails setOpenBookDetails={setOpenBookDetails} bookId={bookId} />
+      )}
     </section>
   );
 }
