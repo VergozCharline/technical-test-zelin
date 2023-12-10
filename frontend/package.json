@@ -25,7 +25,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-with-api": "concurrently \"react-scripts start\" \"PORT=3000 nodemon ./my-node-api/server/server.js\""
   },
   "eslintConfig": {
     "extends": [

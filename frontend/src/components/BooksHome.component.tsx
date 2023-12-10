@@ -1,37 +1,23 @@
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useState } from "react";
 
-// Import Swiper styles
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { Pagination } from "swiper/modules";
-import { useContext, useEffect, useState } from "react";
 import BookDetails from "./BookDetails.component";
-import axios from "axios";
 
-export default function BooksHome({ books, setBooks }:any) {
+
+export default function BooksHome({ books }:any) {
   const [bookId, setBookId] = useState(null);
   const [openBookDetails, setOpenBookDetails] = useState<boolean>(false);
-  const [refetchCreateBook, setRefetchCreateBook] = useState(false);
 
   const getBookId = (id:any) =>{
       setBookId(id);
       setOpenBookDetails(true)
   }
  
-  useEffect(() => {
-    axios
-      .get("http://localhost:8001/api/books")
-      .then((response) => {
-        setBooks(response.data);
-        setRefetchCreateBook(!refetchCreateBook);
-        console.log("respppp", response.data);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération des livres : ", error);
-      });
-  }, [setRefetchCreateBook]);
-
   return (
     <div className="mt-40 h-[100vh] mx-5">
         <>
