@@ -15,8 +15,6 @@ export default function BookDetails({ setOpenBookDetails, bookId }: Props) {
   const [openUpdateBook, setOpenUpdateBook] = useState(false);
   const { books, setBooks }: BookContextProps = useContext(BookContext);
 
-
-  
   useEffect(() => {
     if (oneBookID) {
       Swal.fire({
@@ -36,7 +34,7 @@ export default function BookDetails({ setOpenBookDetails, bookId }: Props) {
               });
               Swal.fire("Le livre est bien supprimé", "", "success");
             })
-               .catch((error) => {
+            .catch((error) => {
               console.error("Delete error: ", error);
               Swal.fire(
                 "Une erreur s'est produite lors de la suppression du livre",
@@ -140,7 +138,7 @@ export default function BookDetails({ setOpenBookDetails, bookId }: Props) {
                       </div>
                     </div>
 
-                    <div className="lg:w-[70%] mx-auto lg:mt-10 border px-2 md:px-10 py-3 md:py-7 rounded-xl relative">
+                    <div className="lg:w-[80%] mx-auto lg:mt-10 border px-2 md:px-10 py-3 md:py-7 rounded-xl relative">
                       <div className="flex gap-4">
                         <p className="text-sm lg:text-md font-semibold opacity-60 mb-5 text-textPurple">
                           Note :
