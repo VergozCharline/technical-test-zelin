@@ -1,78 +1,224 @@
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useContext, useState } from "react";
 
-// Import Swiper styles
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { Pagination } from "swiper/modules";
-import { useContext, useEffect, useState } from "react";
-import { BookContext } from "../context/BookContext";
 import BookDetails from "./BookDetails.component";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { BookContext, BookContextProps } from "../context/BookContext";
 
 export default function BooksHome() {
-  const { books }: any = useContext(BookContext);
-  const [bookId, setBookId] = useState<any | null>(null);
+  const { books }:BookContextProps = useContext(BookContext);
+  const [bookId, setBookId] = useState(null);
   const [openBookDetails, setOpenBookDetails] = useState<boolean>(false);
-  const [getBookDetails, setBookDetails] = useState({})
-  const [refetchDelete, setRefetchDelete] = useState(false)
 
-  const { id } = useParams();
+  const getBookId = (id: any) => {
+    setBookId(id);
+    setOpenBookDetails(true);
+  };
 
-  const getBookId = (id:any) =>{
-      setBookId(id);
-      setOpenBookDetails(true)
-  }
-
-useEffect(() => {
-  axios.get(`http://localhost:8001/api/books/${id}`)
-  .then(response => {
-      console.log(response);
-      setBookDetails(response.data)
-      setRefetchDelete(!refetchDelete)
-  })
-  .catch((error) => {
-      console.error(error);
-      
-  })
-}, [setRefetchDelete])
-  
   return (
-    <div className="mt-40">
-      <Swiper
-        slidesPerView={3}
-        spaceBetween={10}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Pagination]}
-        className="mySwiper"
-      >
-        {books.map((myBooks: any) => (
-          <SwiperSlide className="cursor-pointer" key={myBooks._id} onClick={() => getBookId(myBooks._id)}>
-            <div
-       
-              className="border rounded-md px-5 py-5 w-full mx-2 md:mx-auto lg:w-64 h-44 overflow-y-scroll lg:overflow-y-auto z-10"
-            >
-              <img
-                className="absolute opacity-30 -z-10 mx-auto"
-                src="/decoration.webp"
-                alt=""
-                width={190}
-                height={190}
-              />
-              <div className="flex flex-col gap-3">
-                <p className="text-center text-lg font-semibold opacity-75">
-                  {myBooks.title}
-                </p>
-                <p className="text-center">{myBooks.author}</p>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      {openBookDetails && bookId !== null && <BookDetails setOpenBookDetails={setOpenBookDetails} bookId={bookId} books={books}/>}
+    <div className="pt-40 px-5 min-h-[100vh]">
+      <>
+        <h2 className="pl-5 mt-7 mb-5 text-2xl text-textPurple border-b border-colorBorder pb-2 font-bold opacity-75">
+          Mes Romans
+        </h2>
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={10}
+          breakpoints={{
+            820: {
+              slidesPerView: 5,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 7,
+              spaceBetween: 10,
+            },
+            1800: {
+              slidesPerView: 9,
+              spaceBetween: 10,
+            },
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+          className="mySwiper h-72"
+        >
+          {books
+            .filter((genreBooks: any) => genreBooks.genre === "Roman")
+            .map((myBooks: any) => (
+              <SwiperSlide
+                className="cursor-pointer"
+                key={myBooks._id}
+                onClick={() => getBookId(myBooks._id)}
+              >
+                <div className=" mx-2 md:mx-auto z-10">
+                  <img
+                    className="rounded-md mx-auto min-h-[14.5rem] max-h-[14.5rem]"
+                    src={myBooks.picture}
+                    alt=""
+                    width={150}
+                    height={150}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      </>
+      <>
+        <h2 className="pl-5 mt-7 mb-5 text-2xl text-textPurple border-b border-colorBorder pb-2 font-bold opacity-75">
+          Mes Thrillers
+        </h2>
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={10}
+          breakpoints={{
+            820: {
+              slidesPerView: 5,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 7,
+              spaceBetween: 10,
+            },
+            1800: {
+              slidesPerView: 9,
+              spaceBetween: 10,
+            },
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+          className="mySwiper h-72"
+        >
+          {books
+            .filter((genreBooks: any) => genreBooks.genre === "Thriller")
+            .map((myBooks: any) => (
+              <SwiperSlide
+                className="cursor-pointer"
+                key={myBooks._id}
+                onClick={() => getBookId(myBooks._id)}
+              >
+                <div className="md:mx-auto overflow-y-scroll lg:overflow-y-auto z-10">
+                  <img
+                    className="rounded-md mx-auto min-h-[14.5rem] max-h-[14.5rem]"
+                    src={myBooks.picture}
+                    alt=""
+                    width={150}
+                    height={150}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      </>
+      <>
+        <h2 className="pl-5 mt-7 mb-5 text-2xl text-textPurple border-b border-colorBorder pb-2 font-bold opacity-75">
+          Mes Livres Fantaisie
+        </h2>
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={10}
+          breakpoints={{
+            820: {
+              slidesPerView: 5,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 7,
+              spaceBetween: 10,
+            },
+            1800: {
+              slidesPerView: 9,
+              spaceBetween: 10,
+            },
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+          className="mySwiper h-72"
+        >
+          {books
+            .filter((genreBooks: any) => genreBooks.genre === "Fantaisie")
+            .map((myBooks: any) => (
+              <SwiperSlide
+                className="cursor-pointer"
+                key={myBooks._id}
+                onClick={() => getBookId(myBooks._id)}
+              >
+                <div className="md:mx-auto z-10">
+                  <img
+                    className="rounded-md mx-auto min-h-[14.5rem] max-h-[14.5rem]"
+                    src={myBooks.picture}
+                    alt=""
+                    width={150}
+                    height={150}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      </>
+      <>
+        <h2 className="pl-5 mt-7 mb-5 text-2xl text-textPurple border-b border-colorBorder pb-2 font-bold opacity-75">
+          Mes Autres Livres
+        </h2>
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={10}
+          breakpoints={{
+            820: {
+              slidesPerView: 5,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 7,
+              spaceBetween: 10,
+            },
+            1800: {
+              slidesPerView: 9,
+              spaceBetween: 10,
+            },
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+          className="mySwiper h-72"
+        >
+          {books
+            .filter((genreBooks: any) => genreBooks.genre !== "Fantaisie" && genreBooks.genre !== "Thriller" && genreBooks.genre !== "Roman")
+            .map((myBooks: any) => (
+              <SwiperSlide
+                className="cursor-pointer"
+                key={myBooks._id}
+                onClick={() => getBookId(myBooks._id)}
+              >
+                <div className="md:mx-auto z-10">
+                  <img
+                    className="rounded-md mx-auto min-h-[14.5rem] max-h-[14.5rem]"
+                    src={myBooks.picture}
+                    alt=""
+                    width={150}
+                    height={150}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      </>
+      {openBookDetails && (
+        <BookDetails
+          setOpenBookDetails={setOpenBookDetails}
+          bookId={bookId}
+        />
+      )}
     </div>
   );
 }

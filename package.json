@@ -1,11 +1,18 @@
 {
   "name": "technical-test-zelin",
   "version": "1.0.0",
-  "description": "",
+  "proxy": "http://localhost:8001",
+  "description": "- Cloner le repot - Ajouter le .env - Lancer deux terminal  - Le premier cd backend => npm start  - Le deuxieme cd frontend => npm start",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && npm start"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

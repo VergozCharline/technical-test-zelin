@@ -8,25 +8,39 @@ async function getCollection() {
   
   async function createBook(req, res) {
     try {
-      const { title, author, date, note, rate, lastModification } = req.body;
+      const { title, picture, author, date, note, genre, rate, lastModification } = req.body;
 
-      if (!title || !author || !date || !note) {
+      if (!title || !author || !date || !note || !genre || !picture) {
         return res.status(400).json({ message: "Please complete all fields" });
       }
   
-      const collection = await getCollection(); 
+      const collection = await getCollection();
       const result = await collection.insertOne({
-        title,
-        author,
-        date,
+        title: String(title), 
+        picture: String(picture),
+        author: String(author),
+        date: Number(date),
         publicationDate: new Date(),
-        note,
+        note: String(note),
+        genre: String(genre),
         rate: Number(rate),
-        lastModification: lastModification ? new Date() : null,
+        lastModification: null,
       });
   
-      res.status(201).json({ message: 'Book create successfully' });
-      console.log(result);
+      const createdBook = {
+        _id: result.insertedId,
+        title: String(title), 
+        picture: String(picture),
+        author: String(author),
+        date: Number(date),
+        publicationDate: new Date(),
+        note: String(note),
+        genre: String(genre),
+        rate: Number(rate),
+        lastModification: null,
+      };
+
+      res.status(201).json({ message: 'Book create successfully', book: createdBook });
     } catch (error) {
       console.error("Error ", error);
       res.status(500).json({ message: "Error when creating the book" });
@@ -49,8 +63,7 @@ async function getAllBooks(req, res) {
   async function getOneBook(req, res) {
     try {
       const collection = await getCollection();
-      const bookID = req.params.bookID;
-      console.log(bookID);
+      const bookID = req.params.bookID;;
       const result = await collection.findOne({
         _id: ObjectId.createFromHexString(bookID),
       });
@@ -70,6 +83,11 @@ async function getAllBooks(req, res) {
       const collection = await getCollection();
       const bookID = req.params.bookID;
       const updatedData = req.body;
+
+      if ('rate' in updatedData && (updatedData.rate < 0 || updatedData.rate > 5)) {
+        return res.status(400).json({ message: "Invalid rate value. Rate should be between 0 and 5." });
+      }
+      updatedData.lastModification = new Date();
   
       delete updatedData._id;
   
@@ -77,10 +95,11 @@ async function getAllBooks(req, res) {
         { _id: ObjectId.createFromHexString(bookID) },
         { $set: updatedData }
       );
-      console.log(result);
   
       if (result.matchedCount > 0) {
-        res.status(200).json({ message: "Book updated succesfully" });
+        const updatedBook = await collection.findOne({ _id: ObjectId.createFromHexString(bookID) });
+  
+        res.status(200).json({ message: "Book updated successfully", book: updatedBook });
       } else {
         res.status(404).json({ message: "Book not found" });
       }
@@ -89,6 +108,7 @@ async function getAllBooks(req, res) {
       res.status(500).json({ message: "Server error" });
     }
   }
+  
 
   async function deleteBook(req, res) {
     try {

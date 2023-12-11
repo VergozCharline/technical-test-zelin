@@ -1,7 +1,9 @@
-import React from 'react'
-
 export default function Footer() {
   return (
-    <div className="">Footer</div>
-  )
+    <footer className="py-5">
+      <p className="text-sm opacity-60 text-end mr-10 text-textPurple">
+        Charline Vergoz
+      </p>
+    </footer>
+  );
 }
