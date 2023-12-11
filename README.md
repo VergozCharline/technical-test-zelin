@@ -21,9 +21,3 @@ Ajouter dans le dossier backend le .env
 npm start
 ```
 
-
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
