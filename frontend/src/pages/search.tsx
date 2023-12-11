@@ -41,27 +41,23 @@ export default function Search({ setOpenNewBook, openNewBook }: Props) {
           onChange={(e) => setSearchValue(e.target.value)}
           required
         />
-        <div className="flex flex-wrap gap-8 mt-10 md:mt-20 items-center justify-center">
+        <div className="flex flex-wrap gap-3 md:gap-8 mt-10 md:mt-20 items-center justify-center">
           {searchValue
             ? searchBookByTitle.map((book: any) => (
                 <button type="button" onClick={() => getBookId(book._id)}>
                   <img
-                    className="rounded-md min-h-[14.5rem] max-h-[14.5rem]"
+                      className="rounded-md w-24 h-36 md:w-32 md:h-48"
                     src={book.picture}
                     alt={book.title}
-                    width={150}
-                    height={150}
                   />
                 </button>
               ))
             : books.map((allBooks: any) => (
                 <button type="button" onClick={() => getBookId(allBooks._id)}>
                   <img
-                    className="rounded-md min-h-[14.5rem] max-h-[14.5rem]"
+                      className="rounded-md w-24 h-36 md:w-32 md:h-48"
                     src={allBooks.picture}
                     alt={allBooks.title}
-                    width={150}
-                    height={150}
                   />
                 </button>
               ))}

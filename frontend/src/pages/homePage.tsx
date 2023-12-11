@@ -4,10 +4,8 @@ import NewBook from "../components/NewBook.component";
 import Footer from "../components/Footer.component";
 
 type Props = {
-  books: any;
   setOpenNewBook: (value: boolean) => void;
   openNewBook: boolean;
-  setBooks:any;
 };
 
 export default function HomePage({

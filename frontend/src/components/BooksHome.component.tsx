@@ -7,10 +7,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import BookDetails from "./BookDetails.component";
-import { BookContext } from "../context/BookContext";
+import { BookContext, BookContextProps } from "../context/BookContext";
 
 export default function BooksHome() {
-  const { books }:any = useContext(BookContext);
+  const { books }:BookContextProps = useContext(BookContext);
   const [bookId, setBookId] = useState(null);
   const [openBookDetails, setOpenBookDetails] = useState<boolean>(false);
 

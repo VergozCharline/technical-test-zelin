@@ -4,13 +4,13 @@ import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
-import { BookContext } from "./context/BookContext";
+import { BookContext, BookContextProps } from "./context/BookContext";
 import Search from "./pages/search";
 import HomePage from "./pages/homePage";
 
 function App() {
   const [openNewBook, setOpenNewBook] = useState(false);
-  const { books, setBooks }:any = useContext(BookContext);
+  const { books, setBooks }:BookContextProps = useContext(BookContext);
 
   return (
     <Router>
@@ -21,10 +21,8 @@ function App() {
               path="/"
               element={
                 <HomePage
-                  books={books}
                   setOpenNewBook={setOpenNewBook}
                   openNewBook={openNewBook}
-                  setBooks={setBooks}
                 />
               }
             />
