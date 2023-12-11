@@ -1,6 +1,6 @@
 # technical-test-zelin
 
-## Langage utilisé
+## Langages utilisés
 
 * HTML / Tailwind
 * React / Typescript
@@ -17,6 +17,7 @@ npm install
 ```
 Ajouter dans le dossier backend le .env 
 
+Faites attention d'être à la racine du projet puis faite la commande
 ```
 npm start
 ```
