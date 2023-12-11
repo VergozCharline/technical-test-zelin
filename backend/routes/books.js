@@ -1,9 +1,15 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const { getAllBooks, createBook, updateBook, getOneBook, deleteBook } = require('../controllers/books.js')
+const {
+  getAllBooks,
+  createBook,
+  updateBook,
+  getOneBook,
+  deleteBook,
+} = require("../controllers/books.js");
 
-router.post("/", createBook)
+router.post("/", createBook);
 router.get("/", getAllBooks);
 router.get("/:bookID", getOneBook);
 router.patch("/:bookID", updateBook);

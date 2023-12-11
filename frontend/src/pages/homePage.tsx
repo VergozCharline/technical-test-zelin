@@ -8,10 +8,7 @@ type Props = {
   openNewBook: boolean;
 };
 
-export default function HomePage({
-  setOpenNewBook,
-  openNewBook,
-}: Props) {
+export default function HomePage({ setOpenNewBook, openNewBook }: Props) {
   return (
     <div className="bg-gradient-to-b from-black to-slate-900">
       <Header setOpenNewBook={setOpenNewBook} />

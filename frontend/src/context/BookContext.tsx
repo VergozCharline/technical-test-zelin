@@ -1,9 +1,14 @@
-// BookContext.tsx
-import React, { createContext, useState, useEffect, SetStateAction, Dispatch } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  SetStateAction,
+  Dispatch,
+} from "react";
 import axios, { AxiosResponse } from "axios";
+
 import Loader from "../components/Loader.component";
 
-// Définition du type pour un livre
 interface Book {
   title: string;
   author: string;
@@ -22,7 +27,7 @@ export interface BookContextProps {
 
 const initialBookContext: BookContextProps = {
   books: [],
-  setBooks: () => {}
+  setBooks: () => {},
 };
 
 interface BookContextProviderProps {
@@ -30,7 +35,6 @@ interface BookContextProviderProps {
 }
 
 export const BookContext = createContext<BookContextProps>(initialBookContext);
-
 
 export const BookContextProvider: React.FC<BookContextProviderProps> = ({
   children,
@@ -41,20 +45,24 @@ export const BookContextProvider: React.FC<BookContextProviderProps> = ({
     axios
       .get<Book[]>("http://localhost:8001/api/books")
       .then((response: AxiosResponse<Book[]>) => {
-        setBooks(response.data); 
+        setBooks(response.data);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des livres : ", error);
       });
   }, [setBooks]);
 
-  if (books.length === 0 ) {
-    return <div className="flex items-center bg-gradient-to-b from-black to-slate-900 min-h-[100vh]">
-      <Loader />
-    </div>; 
+  if (books.length === 0) {
+    return (
+      <div className="flex items-center bg-gradient-to-b from-black to-slate-900 min-h-[100vh]">
+        <Loader />
+      </div>
+    );
   }
 
   return (
-    <BookContext.Provider value={{ books, setBooks }}>{children}</BookContext.Provider>
+    <BookContext.Provider value={{ books, setBooks }}>
+      {children}
+    </BookContext.Provider>
   );
 };

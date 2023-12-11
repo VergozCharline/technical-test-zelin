@@ -5,10 +5,10 @@ import Header from "../components/Header.component";
 import BookDetails from "../components/BookDetails.component";
 import NewBook from "../components/NewBook.component";
 
-type Props={
+type Props = {
   setOpenNewBook: (value: boolean) => void;
   openNewBook: boolean;
-}
+};
 
 export default function Search({ setOpenNewBook, openNewBook }: Props) {
   const { books }: any = useContext(BookContext);
@@ -30,12 +30,16 @@ export default function Search({ setOpenNewBook, openNewBook }: Props) {
       <Header setOpenNewBook={setOpenNewBook} />
       {openNewBook && <NewBook setOpenNewBook={setOpenNewBook} />}
       <div className="flex flex-col justify-center items-center pt-36 pb-20 px-7 md:px-20 ">
-        <label htmlFor="search" className="text-lg font-semibold opacity-75 text-textPurple">
+        <label
+          htmlFor="search"
+          className="text-lg font-semibold opacity-75 text-textPurple"
+        >
           Vous cherchez un livre ?
         </label>
         <input
           className="border py-1 px-2 rounded-md bg-gradient-to-b from-black to-slate-900 text-textPurple"
           type="text"
+          placeholder="Renseignez le titre..."
           name="search"
           id="search"
           onChange={(e) => setSearchValue(e.target.value)}
@@ -44,18 +48,26 @@ export default function Search({ setOpenNewBook, openNewBook }: Props) {
         <div className="flex flex-wrap gap-3 md:gap-8 mt-10 md:mt-20 items-center justify-center">
           {searchValue
             ? searchBookByTitle.map((book: any) => (
-                <button type="button" onClick={() => getBookId(book._id)}>
+                <button
+                  key={book._id}
+                  type="button"
+                  onClick={() => getBookId(book._id)}
+                >
                   <img
-                      className="rounded-md w-24 h-36 md:w-32 md:h-48"
+                    className="rounded-md w-24 h-36 md:w-32 md:h-48"
                     src={book.picture}
                     alt={book.title}
                   />
                 </button>
               ))
             : books.map((allBooks: any) => (
-                <button type="button" onClick={() => getBookId(allBooks._id)}>
+                <button
+                  key={allBooks._id}
+                  type="button"
+                  onClick={() => getBookId(allBooks._id)}
+                >
                   <img
-                      className="rounded-md w-24 h-36 md:w-32 md:h-48"
+                    className="rounded-md w-24 h-36 md:w-32 md:h-48"
                     src={allBooks.picture}
                     alt={allBooks.title}
                   />

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
@@ -14,7 +14,7 @@ interface response {
 }
 
 export default function NewBook({ setOpenNewBook }: Props) {
-  const { books, setBooks }:BookContextProps = useContext(BookContext);
+  const { books, setBooks }: BookContextProps = useContext(BookContext);
   const [title, setTitle] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
   const [picture, setPicture] = useState<string>("");
@@ -148,7 +148,7 @@ export default function NewBook({ setOpenNewBook }: Props) {
                 type="number"
                 name="date"
                 id="date"
-                 onChange={(e) => {
+                onChange={(e) => {
                   const value = parseInt(e.target.value);
                   if (!isNaN(value)) {
                     setDate(value);

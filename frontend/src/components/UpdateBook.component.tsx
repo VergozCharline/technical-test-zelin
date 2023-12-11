@@ -21,9 +21,6 @@ export default function UpdateBook({ setOpenUpdateBook, bookId }: Props) {
     (bookIdUpdate: any) => bookIdUpdate._id === bookId
   )[0];
 
-  console.log(bookId);
-  
-
   const [title, setTitle] = useState<string>(mapInfos.title || "");
   const [author, setAuthor] = useState<string>(mapInfos.author || "");
   const [date, setDate] = useState<number>(mapInfos.date || "");

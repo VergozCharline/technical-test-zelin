@@ -10,7 +10,7 @@ import BookDetails from "./BookDetails.component";
 import { BookContext, BookContextProps } from "../context/BookContext";
 
 export default function BooksHome() {
-  const { books }:BookContextProps = useContext(BookContext);
+  const { books }: BookContextProps = useContext(BookContext);
   const [bookId, setBookId] = useState(null);
   const [openBookDetails, setOpenBookDetails] = useState<boolean>(false);
 
@@ -193,7 +193,12 @@ export default function BooksHome() {
           className="mySwiper h-72"
         >
           {books
-            .filter((genreBooks: any) => genreBooks.genre !== "Fantaisie" && genreBooks.genre !== "Thriller" && genreBooks.genre !== "Roman")
+            .filter(
+              (genreBooks: any) =>
+                genreBooks.genre !== "Fantaisie" &&
+                genreBooks.genre !== "Thriller" &&
+                genreBooks.genre !== "Roman"
+            )
             .map((myBooks: any) => (
               <SwiperSlide
                 className="cursor-pointer"
@@ -214,10 +219,7 @@ export default function BooksHome() {
         </Swiper>
       </>
       {openBookDetails && (
-        <BookDetails
-          setOpenBookDetails={setOpenBookDetails}
-          bookId={bookId}
-        />
+        <BookDetails setOpenBookDetails={setOpenBookDetails} bookId={bookId} />
       )}
     </div>
   );
