@@ -1,6 +1,29 @@
 # technical-test-zelin
 
-- Cloner le repot
-- Ajouter le .env
-- Lancer la commande npm i
-- Lancer la commande npm start 
+## Langage utilisé
+
+* HTML / Tailwind
+* React / Typescript
+* Nodejs / Express
+* Mongodb
+
+### Démarrage
+
+```
+git clone (lien SSR)
+```
+```
+npm install
+```
+Ajouter dans le dossier backend le .env 
+
+```
+npm start
+```
+
+
+
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc
+
