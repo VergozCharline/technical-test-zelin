@@ -36,7 +36,7 @@ export default function BookDetails({ setOpenBookDetails, bookId }: Props) {
               });
               Swal.fire("Le livre est bien supprimé", "", "success");
             })
-            .catch((error) => {
+               .catch((error) => {
               console.error("Delete error: ", error);
               Swal.fire(
                 "Une erreur s'est produite lors de la suppression du livre",
@@ -44,6 +44,8 @@ export default function BookDetails({ setOpenBookDetails, bookId }: Props) {
                 "error"
               );
             });
+        } else {
+          setOpenBookDetails(false);
         }
       });
     }
@@ -56,7 +58,7 @@ export default function BookDetails({ setOpenBookDetails, bookId }: Props) {
           {!openUpdateBook && (
             <button
               type="button"
-              className="absolute right-7 lg:right-[18%] top-12 lg:top-[10%] border rounded-full px-3 py-1 hover:text-white hover:bg-colorBorder z-50 bg-transparent text-textPurple"
+              className="absolute right-7 md:right-12 lg:right-[19%] top-5 md:top-[10%] border rounded-full px-3 py-1 hover:text-white hover:bg-colorBorder z-50 bg-transparent text-textPurple"
               onClick={() => setOpenBookDetails(false)}
             >
               X
@@ -76,7 +78,7 @@ export default function BookDetails({ setOpenBookDetails, bookId }: Props) {
                   />
                 ) : (
                   <>
-                    <p className="text-sm text-textPurple opacity-75 text-end">
+                    <p className="text-sm text-textPurple opacity-75 text-start md:text-end">
                       Livre ajouté le :{" "}
                       {new Date(myBooks.publicationDate).toLocaleDateString(
                         "fr-FR",
@@ -90,7 +92,7 @@ export default function BookDetails({ setOpenBookDetails, bookId }: Props) {
                       )}
                     </p>
                     {myBooks.lastModification !== null && (
-                      <p className="text-sm opacity-75 text-end text-textPurple">
+                      <p className="text-sm opacity-75 text-start md:text-end text-textPurple">
                         Dernière modification le :{" "}
                         {new Date(myBooks.lastModification).toLocaleDateString(
                           "fr-FR",

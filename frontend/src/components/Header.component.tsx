@@ -7,7 +7,7 @@ type Props = {
 export default function Header({ setOpenNewBook }: Props) {
   return (
     <header className="fixed top-0 w-full shadow-md z-50 bg-gradient-to-b from-black to-slate-800 ">
-      <nav className="flex flex-row justify-between items-center my-8 px-5 md:px-20">
+      <nav className="flex flex-row justify-between items-center my-8 px-6 md:px-20">
         <Link to="/" aria-label="retour à la page d'accueil">
           <img
             className="scale-150 max-md:w-16"
@@ -18,7 +18,7 @@ export default function Header({ setOpenNewBook }: Props) {
           />
         </Link>
         <div>
-          <ul className="flex gap-5 md:gap-10 font-roboto">
+          <ul className="flex gap-5 md:gap-10 font-roboto text-sm md:text-lg">
             <li
               onClick={() => setOpenNewBook(true)}
               className="text-textPurple cursor-pointer hover:text-hoverPurple hover:scale-110 hover:transition-all"

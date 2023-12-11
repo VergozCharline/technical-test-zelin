@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
-import { BookContext } from "../context/BookContext";
+import { BookContext, BookContextProps } from "../context/BookContext";
 
 type Props = {
   setOpenNewBook: (value: boolean) => void;
@@ -14,7 +14,7 @@ interface response {
 }
 
 export default function NewBook({ setOpenNewBook }: Props) {
-  const { books, setBooks }:any = useContext(BookContext);
+  const { books, setBooks }:BookContextProps = useContext(BookContext);
   const [title, setTitle] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
   const [picture, setPicture] = useState<string>("");
